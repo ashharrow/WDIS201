@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baseball Trivia Challenge</title>
+  <link rel="stylesheet" href="css/trivia.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Baseball Trivia Challenge</h1>
+    <div class="question" id="question">Loading...</div>
+    <ul class="options" id="options"></ul>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Who holds the MLB record for most home runs in a single season?",
+        options: ["Barry Bonds", "Mark McGwire", "Sammy Sosa", "Babe Ruth"],
+        answer: "Barry Bonds"
+      },
+      {
+        question: "Which team has won the most World Series titles?",
+        options: ["Red Sox", "Dodgers", "Yankees", "Cardinals"],
+        answer: "Yankees"
+      },
+      {
+        question: "What year was the first official World Series played?",
+        options: ["1898", "1903", "1910", "1927"],
+        answer: "1903"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('question').textContent = q.question;
+      const options = document.getElementById('options');
+      options.innerHTML = '';
+      q.options.forEach(opt => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        li.appendChild(btn);
+        options.appendChild(li);
+      });
+    }
+
+    function checkAnswer(selected) {
+      if (selected === questions[current].answer) {
+        score++;
+        alert("Correct! 🎉");
+      } else {
+        alert("Oops! The right answer was: " + questions[current].answer);
+      }
+      current++;
+      document.getElementById('score').textContent = "Score: " + score;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById('question').textContent = "Game Over!";
+        document.getElementById('options').innerHTML = '';
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
